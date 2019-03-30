@@ -1,0 +1,9 @@
+.env
+.DS_Store
+.idea
+.node-xmlhttprequest-*
+build
+coverage
+coverage.json
+node_modules
+
