@@ -15,7 +15,7 @@ several aspects that hinder or would otherwise make the process of CDS on a bloc
 This system does not actually manage digital assets, rather it manages the representation of a digital asset transfer database(ledger). 
 For example, if there is a discrepancy in a trade and the custodian wants to rectify it, we can theoretically restart at a position in time right before the issue. We do this by redeploying contracts and populating the database with the given balances
 of each stakeholder at the corresponding time and simply resume trading. 
-Similarly if a private key gets lost, the contracts can just be redeployed. The assets are not lost, as this was just a ledger of them. This is contrary to the way tokens like ERC20 are handled in a similar process, as the asset itself is in located in that unique contract.
+Similarly if a private key gets lost, the contracts can just be redeployed. The assets are not lost, as this was just a ledger of them. This is contrary to the way tokens like ERC20 are handled in a similar process, as the asset itself is not located in that unique contract.
 
 
 The project is reliant on the participation of the following stakeholders...
@@ -28,7 +28,7 @@ that trades are verified chronologically.
     //  The Exchange events emited are as follows:
     emit Trade(TransactionID, TimeStamp, BuyInvestor, BuyBroker, SellInvestor, SellBroker, Amount, Asset);
     
-##Broker
+## Broker
 The Broker entity is responsible for transmitting their clients trade details. This may take the form of either a buyOrder, or a sellOrder. 
 This information is only available after a successful trade on an exchange.
 
@@ -64,7 +64,6 @@ To demonstrate these contracts in action, the following project allows users to 
 - Create Interface Contracts
 - Batch trade input
 - Implement Cancel trade for all parties
-- Finish NatSpec
 - Deal with Bytes32 conversion in tests
 - Deal with constructor modifier order from solhint warning
 
