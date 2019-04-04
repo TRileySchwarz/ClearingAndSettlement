@@ -1,0 +1,155 @@
+<html>
+<head>
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/milligram/1.2.3/milligram.min.css">
+</head>
+<body class="container" style="padding-top: 3%;">
+
+<span style="display:block; height: 50px;"></span>
+
+<h1>  Entity Factory</h1>
+<p class="description">
+    This interface affords anyone the ability to launch an entity for the Clearing and Settlement Ecosystem.
+</p>
+<div class="row">
+    <div class="column">
+        <label>Current User</label>
+            <blockquote><p><em id="accountAddress">Loading..</em></p></blockquote>
+    </div>
+    <div class="column">
+        <label>Factory Version</label>
+        <blockquote><p><em id="factoryVersion">Loading..</em></p></blockquote>
+    </div>
+</div>
+
+<hr />
+
+<h3>Entity Deployer</h3>
+<div class="column">
+    <label>Create New Entity</label>
+    <div class="row">
+        <input type="text" id="entityName" placeholder="Name of the entity to be deployed" />
+    </div>
+    <button id="deployBrokerButton">Deploy Broker Entity</button>
+    &nbsp;
+    <button id="deployCustodianButton">Deploy Custodian Entity</button>
+    &nbsp;
+    <button id="deployExchangeButton">Deploy Exchange Entity</button>
+    <br />
+</div>
+
+<hr />
+
+<div id="testResponse" style="padding: 40px; display: none; border: 3px solid #9b4dca">
+</div>
+
+
+<script type="text/javascript" src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
+<script type="text/javascript" src="EntityFactory.js"></script>
+<script type="text/javascript">
+
+    let web3 = window.web3;
+    let el = function(id){ return document.querySelector(id); };
+
+    // If web3 is not injected (modern browsers)...
+    if (typeof web3 === 'undefined') {
+        // Listen for provider injection
+        window.addEventListener('message', ({ data }) => {
+            if (data && data.type && data.type === 'ETHEREUM_PROVIDER_SUCCESS') {
+                // Use injected provider, start dapp...
+                web3 = new Web3(window.ethereum);
+            } else {
+                web3 = new Web3(new Web3.providers.HttpProvider('http://localhost:8545'));
+            }
+        });
+        // Request provider
+        window.postMessage({ type: 'ETHEREUM_PROVIDER_REQUEST', web3: true }, '*');
+    }
+    // If web3 is injected (legacy browsers)...
+    else {
+        // Use injected provider, start dapp
+        web3 = new Web3(web3.currentProvider);
+    }
+
+    // Method being sent to library that is called once values have been updated
+    function updateGlobals(entityFactory){
+        el('#factoryVersion').innerHTML = entityFactory.entityFactoryVersion;
+    }
+
+    function updateTransactionStatus (isSuccessful, message, hash){
+        console.log(isSuccessful + " " + message + " " + hash);
+    }
+
+    web3.eth.getAccounts(function(err, res){
+        if(!err){
+
+            let entityFactory = new EntityFactory(web3, res, updateGlobals, updateTransactionStatus);
+
+            el('#accountAddress').innerHTML = res[0];
+            el('#testResponse').style.display = 'block';
+
+            // Update the globals all initially
+            entityFactory.updateGlobals(0, function(error, result){
+                if(!error){
+                    el('#testResponse').innerHTML = "The factory contract was loaded properly. Transaction Hashes will show up here as calls are made."
+                }
+                else{
+                    el('#testResponse').innerHTML = 'This was the error: ' + error;
+                }
+            });
+
+            // This triggers the deployment of a Broker entity via the Clearing and Settlement Library
+            el('#deployBrokerButton').addEventListener('click', function(){
+                let entityName = el('#entityName').value;
+                let entityType = 1;
+
+                entityFactory.deployNewEntity(entityType, entityName, function(error, result){
+                    if(!error){
+                        el('#testResponse').innerHTML = 'Tx hash: ' + 'https://rinkeby.etherscan.io/tx/' + result;
+                    }
+                    else{
+                        el('#testResponse').innerHTML = 'This was the error: ' + error;
+                    }
+                });
+            });
+
+            // This triggers the deployment of a Custodian entity via the Clearing and Settlement Library
+            el('#deployCustodianButton').addEventListener('click', function(){
+                let entityName = el('#entityName').value;
+                let entityType = 2;
+
+                entityFactory.deployNewEntity(entityType, entityName, function(error, result){
+                    if(!error){
+                        el('#testResponse').innerHTML = 'Tx hash: ' + 'https://rinkeby.etherscan.io/tx/' + result;
+                    }
+                    else{
+                        el('#testResponse').innerHTML = 'This was the error: ' + error;
+                    }
+                });
+            });
+
+            // This triggers the deployment of an Exchange entity via the Clearing and Settlement Library
+            el('#deployExchangeButton').addEventListener('click', function(){
+                let entityName = el('#entityName').value;
+                let entityType = 3;
+
+                entityFactory.deployNewEntity(entityType, entityName, function(error, result){
+                    if(!error){
+                        el('#testResponse').innerHTML = 'Tx hash: ' + 'https://rinkeby.etherscan.io/tx/' + result;
+                    }
+                    else{
+                        el('#testResponse').innerHTML = 'This was the error: ' + error;
+                    }
+                });
+            });
+
+        } else {
+            console.log(err)
+        }
+    });
+
+</script>
+
+<br /><br />
+
+</body>
+</html>
