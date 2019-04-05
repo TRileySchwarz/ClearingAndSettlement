@@ -25,7 +25,7 @@ The project is reliant on the participation of the following stakeholders...
 The Entity Factory Interface can be used anyone to launch their own entities on the Rinkeby test network. Simply login to your MetaMask
 and open the corresponding file from the /gui folder to access the interfaces.
 
-** The next version of this is going to contain a 
+** The next version of this is going to contain an 
 automated Javascript program that actively parses the Rinkeby network and looks for the trades emitted by Brokers and Exchanges.
 When it finds a matching pair, it will execute the confirmTrade function which will replicate how the Custodian can automate the verification process.
 
