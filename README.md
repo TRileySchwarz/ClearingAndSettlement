@@ -20,13 +20,24 @@ Similarly if a private key gets lost, the contracts can just be redeployed. The 
 
 The project is reliant on the participation of the following stakeholders...
 
+## Ecosystem via. Proof of Concept and Rinkeby
+
+The Entity Factory Interface can be used anyone to launch their own entities on the Rinkeby test network. 
+
+** The next version of this is going to contain a 
+automated Javascript program that actively parses the Rinkeby network and looks for the trades emitted by Brokers and Exchanges.
+When it finds a matching pair, it will execute the confirmTrade function which will replicate how the Custodian can automate the verification process.
+
+![alt text](/screens/EntityFactoryUICapture.png?raw=true)
 
 ## Exchange
 The Exchange entity is responsible for pairing both a buyer and a seller (brokers), generating a unique transactionID that simultaneously serves as a nonce to ensure 
 that trades are verified chronologically. 
 
-    //  The Exchange events emited are as follows:
+    // The Exchange events emited are as follows:
     emit Trade(TransactionID, TimeStamp, BuyInvestor, BuyBroker, SellInvestor, SellBroker, Amount, Asset);
+    
+![alt text](/screens/ExchangeUICapture.png?raw=true)
     
 ## Broker
 The Broker entity is responsible for transmitting their clients trade details. This may take the form of either a buyOrder, or a sellOrder. 
@@ -36,17 +47,17 @@ This information is only available after a successful trade on an exchange.
     emit BuyOrder(TransactionID, TimeStamp, Amount, Asset, Investor, Exchange);
     emit SellOrder(TransactionID, TimeStamp, Amount, Asset, Investor, Exchange);
     
+![alt text](/screens/BrokerUICapture.png?raw=true)
+    
 ## Custodian
 The Custodian is responsible for verifying that all three events, Trade, BuyOrder, and SellOrder all match up accordingly. They must do this in chronological order to ensure correct accounting(hence the nonce/TransactionUUID).
 
     // The Custodian events emited are as follows:
     emit TradeConfirmed(TransactionID, TimeStamp);
     
+![alt text](/screens/CustodianUICapture.png?raw=true)
     
-    
-## Ecosystem via. Proof of Concept and Rinkeby
 
-To demonstrate these contracts in action, the following project allows users to simulate what this looks like via a DAPP... Coming Soon...
 
 
 ## Questions to answer

@@ -6,9 +6,9 @@
 
 <span style="display:block; height: 50px;"></span>
 
-<h1>  Broker Interface</h1>
+<h1>  Custodian Interface</h1>
 <p class="description">
-    This interface affords anyone with a valid BROKER contract deployed to emit a buy or sell order.
+    This interface affords anyone with a valid CUSTODIAN contract deployed to verify a trade executed by an exchange.
 </p>
 <div class="row">
     <div class="column">
@@ -27,36 +27,26 @@
 
 <div class="column">
     <div class="row">
-        <label>Set Broker Contract Address</label>
+        <label>Set Custodian Contract Address</label>
     </div>
     <div class="row">
-        <input type="text" id="setBroker" placeholder="0xcc13...91f8" />
+        <input type="text" id="setCustodian" placeholder="0xcc13...91f8" />
         &nbsp;
-        <button id="setBrokerButton">Set</button>
+        <button id="setCustodianButton">Set</button>
     </div>
 </div>
 
 <hr />
 
-<h3>Order Emitter</h3>
+<h3>Confirm Trades</h3>
 <div class="column">
-    <label>Order Details</label>
+    <label>Trade Details</label>
     <div class="row">
         <input type="number" id="transactionID" placeholder="TransactionID... eg, 1" />
         &nbsp;
         <input type="number" id="timeStamp" placeholder="Unix TimeStamp... eg, 1554332784" />
-        &nbsp;
-        <input type="number" id="amount" placeholder="Ammount of the asset... eg, 1000" />
     </div>
-    <div class="row">
-        <input type="number" id="asset" placeholder="Asset unique ID... eg. Apple stocks = 17" />
-        &nbsp;
-        <input type="text" id="investor" placeholder="Investors unique ID, eg. 0xcc13...91f8" />
-        &nbsp;
-        <input type="text" id="exchange" placeholder="Exchanges unique ID, eg. 0xcc13...91f9" />
-    </div>
-    <button id="submitBuyOrderButton">Emit Buy Order</button>
-    <button id="submitSellOrderButton">Emit Sell Order</button>
+    <button id="confirmTradeButton">Confirm Trade</button>
     <br />
 </div>
 
@@ -67,7 +57,7 @@
 
 
 <script type="text/javascript" src="https://cdn.jsdelivr.net/gh/ethereum/web3.js/dist/web3.min.js"></script>
-<script type="text/javascript" src="Broker.js"></script>
+<script type="text/javascript" src="Custodian.js"></script>
 <script type="text/javascript">
 
     let web3 = window.web3;
@@ -94,64 +84,42 @@
     }
 
     // Method being sent to library that is called once values have been updated
-    function updateGlobals(brokerInstance){
-        el('#entityVersion').innerHTML = brokerInstance.entityVersion;
-        el('#entityName').innerHTML = brokerInstance.entityName;
+    function updateGlobals(custodianInstance){
+        el('#entityVersion').innerHTML = custodianInstance.entityVersion;
+        el('#entityName').innerHTML = custodianInstance.entityName;
     }
 
     function updateTransactionStatus (isSuccessful, message, hash){
         console.log(isSuccessful + " " + message + " " + hash);
     }
 
+    el('#testResponse').style.display = 'block';
+
     web3.eth.getAccounts(function(err, res){
         if(!err){
 
-            let broker = new Broker(web3, res, updateGlobals, updateTransactionStatus);
+            let custodian = new Custodian(web3, res, updateGlobals, updateTransactionStatus);
 
             el('#accountAddress').innerHTML = res[0];
-            el('#testResponse').style.display = 'block';
+            el('#testResponse').innerHTML = "Set the entity address before proceeding."
 
-            el('#setBrokerButton').addEventListener('click', function(){
-                broker.setCurrentEntityAddress(el('#setBroker').value);
+            el('#setCustodianButton').addEventListener('click', function(){
+                custodian.setCurrentEntityAddress(el('#setCustodian').value);
 
-                el('#entityVersion').innerHTML = broker.entityVersion;
-                el('#entityName').innerHTML = broker.entityName;
-                el('#testResponse').innerHTML = "The broker contract was loaded properly. Transaction Hashes and function return values will show up here as calls are made."
+                el('#entityVersion').innerHTML = custodian.entityVersion;
+                el('#entityName').innerHTML = custodian.entityName;
+                el('#testResponse').innerHTML = "The custodian contract was loaded properly. Transaction Hashes and function return values will show up here as calls are made."
             });
 
-            // Formats the arguments for a buy order to be emitted on the network
-            el('#submitBuyOrderButton').addEventListener('click', function(){
-                let argumentsArray = [
-                    el('#transactionID').value,
-                    el('#timeStamp').value,
-                    el('#amount').value,
-                    el('#asset').value,
-                    el('#investor').value,
-                    el('#exchange').value,
-                ];
-
-                broker.createBuyOrder(argumentsArray, function(error, result){
-                    if(!error){
-                        el('#testResponse').innerHTML = 'Tx hash: ' + 'https://rinkeby.etherscan.io/tx/' + result;
-                    }
-                    else{
-                        el('#testResponse').innerHTML = 'This was the error: ' + error;
-                    }
-                });
-            });
 
             // Formats the arguments for a sell order to be emitted on the network
-            el('#submitSellOrderButton').addEventListener('click', function(){
+            el('#confirmTradeButton').addEventListener('click', function(){
                 let argumentsArray = [
                     el('#transactionID').value,
                     el('#timeStamp').value,
-                    el('#amount').value,
-                    el('#asset').value,
-                    el('#investor').value,
-                    el('#exchange').value,
                 ];
 
-                broker.createSellOrder(argumentsArray, function(error, result){
+                custodian.confirmTrade(argumentsArray, function(error, result){
                     if(!error){
                         el('#testResponse').innerHTML = 'Tx hash: ' + 'https://rinkeby.etherscan.io/tx/' + result;
                     }
@@ -162,6 +130,7 @@
             });
 
         } else {
+            el('#testResponse').innerHTML = "Please login to MetaMask then refresh your browser."
             console.log(err)
         }
     });

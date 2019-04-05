@@ -103,13 +103,15 @@
         console.log(isSuccessful + " " + message + " " + hash);
     }
 
+    el('#testResponse').style.display = 'block';
+
     web3.eth.getAccounts(function(err, res){
         if(!err){
 
             let broker = new Broker(web3, res, updateGlobals, updateTransactionStatus);
 
             el('#accountAddress').innerHTML = res[0];
-            el('#testResponse').style.display = 'block';
+            el('#testResponse').innerHTML = "Set the entity address before proceeding."
 
             el('#setBrokerButton').addEventListener('click', function(){
                 broker.setCurrentEntityAddress(el('#setBroker').value);
@@ -162,6 +164,7 @@
             });
 
         } else {
+            el('#testResponse').innerHTML = "Please login to MetaMask then refresh your browser."
             console.log(err)
         }
     });

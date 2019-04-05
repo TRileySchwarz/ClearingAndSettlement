@@ -1,277 +1,170 @@
-const BrokerABI = [
-  {
-    'constant': true,
-    'inputs': [],
-    'name': '_version',
-    'outputs': [
-      {
-        'name': '',
-        'type': 'uint256',
-      },
-    ],
-    'payable': false,
-    'stateMutability': 'view',
-    'type': 'function',
-  },
-  {
-    'constant': true,
-    'inputs': [],
-    'name': '_typeOfEntity',
-    'outputs': [
-      {
-        'name': '',
-        'type': 'uint8',
-      },
-    ],
-    'payable': false,
-    'stateMutability': 'view',
-    'type': 'function',
-  },
-  {
-    'constant': false,
-    'inputs': [],
-    'name': 'renounceOwnership',
-    'outputs': [],
-    'payable': false,
-    'stateMutability': 'nonpayable',
-    'type': 'function',
-  },
-  {
-    'constant': true,
-    'inputs': [],
-    'name': 'owner',
-    'outputs': [
-      {
-        'name': '',
-        'type': 'address',
-      },
-    ],
-    'payable': false,
-    'stateMutability': 'view',
-    'type': 'function',
-  },
-  {
-    'constant': true,
-    'inputs': [],
-    'name': 'isOwner',
-    'outputs': [
-      {
-        'name': '',
-        'type': 'bool',
-      },
-    ],
-    'payable': false,
-    'stateMutability': 'view',
-    'type': 'function',
-  },
-  {
-    'constant': true,
-    'inputs': [],
-    'name': '_name',
-    'outputs': [
-      {
-        'name': '',
-        'type': 'bytes32',
-      },
-    ],
-    'payable': false,
-    'stateMutability': 'view',
-    'type': 'function',
-  },
-  {
-    'constant': false,
-    'inputs': [
-      {
-        'name': 'transactionID',
-        'type': 'uint256',
-      },
-      {
-        'name': 'timeStamp',
-        'type': 'uint256',
-      },
-      {
-        'name': 'amount',
-        'type': 'uint256',
-      },
-      {
-        'name': 'asset',
-        'type': 'uint256',
-      },
-      {
-        'name': 'investor',
-        'type': 'address',
-      },
-      {
-        'name': 'exchange',
-        'type': 'address',
-      },
-    ],
-    'name': 'sellOrder',
-    'outputs': [],
-    'payable': false,
-    'stateMutability': 'nonpayable',
-    'type': 'function',
-  },
-  {
-    'constant': false,
-    'inputs': [
-      {
-        'name': 'newOwner',
-        'type': 'address',
-      },
-    ],
-    'name': 'transferOwnership',
-    'outputs': [],
-    'payable': false,
-    'stateMutability': 'nonpayable',
-    'type': 'function',
-  },
-  {
-    'constant': false,
-    'inputs': [
-      {
-        'name': 'transactionID',
-        'type': 'uint256',
-      },
-      {
-        'name': 'timeStamp',
-        'type': 'uint256',
-      },
-      {
-        'name': 'amount',
-        'type': 'uint256',
-      },
-      {
-        'name': 'asset',
-        'type': 'uint256',
-      },
-      {
-        'name': 'investor',
-        'type': 'address',
-      },
-      {
-        'name': 'exchange',
-        'type': 'address',
-      },
-    ],
-    'name': 'buyOrder',
-    'outputs': [],
-    'payable': false,
-    'stateMutability': 'nonpayable',
-    'type': 'function',
-  },
-  {
-    'inputs': [
-      {
-        'name': 'name',
-        'type': 'bytes32',
-      },
-      {
-        'name': 'version',
-        'type': 'uint256',
-      },
-    ],
-    'payable': false,
-    'stateMutability': 'nonpayable',
-    'type': 'constructor',
-  },
-  {
-    'anonymous': false,
-    'inputs': [
-      {
-        'indexed': false,
-        'name': 'transactionID',
-        'type': 'uint256',
-      },
-      {
-        'indexed': false,
-        'name': 'timeStamp',
-        'type': 'uint256',
-      },
-      {
-        'indexed': false,
-        'name': 'amount',
-        'type': 'uint256',
-      },
-      {
-        'indexed': false,
-        'name': 'asset',
-        'type': 'uint256',
-      },
-      {
-        'indexed': false,
-        'name': 'investor',
-        'type': 'address',
-      },
-      {
-        'indexed': false,
-        'name': 'exchange',
-        'type': 'address',
-      },
-    ],
-    'name': 'BuyOrder',
-    'type': 'event',
-  },
-  {
-    'anonymous': false,
-    'inputs': [
-      {
-        'indexed': false,
-        'name': 'transactionID',
-        'type': 'uint256',
-      },
-      {
-        'indexed': false,
-        'name': 'timeStamp',
-        'type': 'uint256',
-      },
-      {
-        'indexed': false,
-        'name': 'amount',
-        'type': 'uint256',
-      },
-      {
-        'indexed': false,
-        'name': 'asset',
-        'type': 'uint256',
-      },
-      {
-        'indexed': false,
-        'name': 'investor',
-        'type': 'address',
-      },
-      {
-        'indexed': false,
-        'name': 'exchange',
-        'type': 'address',
-      },
-    ],
-    'name': 'SellOrder',
-    'type': 'event',
-  },
-  {
-    'anonymous': false,
-    'inputs': [
-      {
-        'indexed': true,
-        'name': 'previousOwner',
-        'type': 'address',
-      },
-      {
-        'indexed': true,
-        'name': 'newOwner',
-        'type': 'address',
-      },
-    ],
-    'name': 'OwnershipTransferred',
-    'type': 'event',
-  },
+const CustodianABI = [
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "_version",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "_typeOfEntity",
+        "outputs": [
+            {
+                "name": "",
+                "type": "uint8"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [],
+        "name": "renounceOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "transactionID",
+                "type": "uint256"
+            },
+            {
+                "name": "timeStamp",
+                "type": "uint256"
+            }
+        ],
+        "name": "confirmTrade",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "owner",
+        "outputs": [
+            {
+                "name": "",
+                "type": "address"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "isOwner",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bool"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": true,
+        "inputs": [],
+        "name": "_name",
+        "outputs": [
+            {
+                "name": "",
+                "type": "bytes32"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "view",
+        "type": "function"
+    },
+    {
+        "constant": false,
+        "inputs": [
+            {
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "transferOwnership",
+        "outputs": [],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "function"
+    },
+    {
+        "inputs": [
+            {
+                "name": "name",
+                "type": "bytes32"
+            },
+            {
+                "name": "version",
+                "type": "uint256"
+            }
+        ],
+        "payable": false,
+        "stateMutability": "nonpayable",
+        "type": "constructor"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": false,
+                "name": "transactionID",
+                "type": "uint256"
+            },
+            {
+                "indexed": false,
+                "name": "timeStamp",
+                "type": "uint256"
+            }
+        ],
+        "name": "TradeConfirmed",
+        "type": "event"
+    },
+    {
+        "anonymous": false,
+        "inputs": [
+            {
+                "indexed": true,
+                "name": "previousOwner",
+                "type": "address"
+            },
+            {
+                "indexed": true,
+                "name": "newOwner",
+                "type": "address"
+            }
+        ],
+        "name": "OwnershipTransferred",
+        "type": "event"
+    }
 ];
 
-function Broker (web3, userAccounts, globalsCallback, updateTransactionStatus) {
+function Custodian (web3, userAccounts, globalsCallback, updateTransactionStatus) {
   this.web3 = web3;
 
-  this.Broker = web3.eth.contract(BrokerABI);
+  this.Custodian = web3.eth.contract(CustodianABI);
 
   this.userAccount = userAccounts[0];
   this.globalsCallback = globalsCallback;
@@ -289,11 +182,11 @@ function Broker (web3, userAccounts, globalsCallback, updateTransactionStatus) {
   this.processTransactionHash();
 }
 
-const method = Broker.prototype;
+const method = Custodian.prototype;
 
 /**
  * ------------------------------------------------------------------------------------------------
- * Helpers for Broker.js
+ * Helpers for Custodian.js
  * ------------------------------------------------------------------------------------------------
  */
 
@@ -351,9 +244,9 @@ method.processTransactionHashHelper = function (index, length, indexesToBeRemove
  */
 
 // Sets the entity address for the details to query from.
-// Parameters... address = hex address of the desired broker entity.
+// Parameters... address = hex address of the desired custodian entity.
 method.setCurrentEntityAddress = function (address) {
-  this.broker = this.Broker.at(address);
+  this.custodian = this.Custodian.at(address);
 
   this.updateGlobals(0, function () {
   });
@@ -384,7 +277,7 @@ method.updateGlobals = function (index, callback) {
 
 method.updateEntityVersion = function (callback) {
   const _this = this;
-  _this.broker._version(function (error, result) {
+  _this.custodian._version(function (error, result) {
     if (!error) {
       _this.entityVersion = result;
       console.log('This is the result of entity Version update: ' + result);
@@ -397,12 +290,12 @@ method.updateEntityVersion = function (callback) {
 
 method.updateEntityName = function (callback) {
   const _this = this;
-  _this.broker._name(function (error, result) {
+  _this.custodian._name(function (error, result) {
     if (!error) {
       result = this.web3.toAscii(result);
 
       _this.entityName = result;
-      console.log('This is the result of Broker Name update: ' + result);
+      console.log('This is the result of Custodian Name update: ' + result);
       callback(null, result);
     } else {
       callback(error, null);
@@ -412,44 +305,23 @@ method.updateEntityName = function (callback) {
 
 /**
  * ------------------------------------------------------------------------------------------------
- * Entity Factory methods
+ * Custodian methods
  * ------------------------------------------------------------------------------------------------
  */
 
-// Creates a new buyOrder
-method.createBuyOrder = function (arrayOfArguments, callback) {
+// Confirm a trade on the network
+method.confirmTrade = function (arrayOfArguments, callback) {
   console.log('The new Buy order button was pushed for the following values: ');
   console.log(arrayOfArguments);
 
   const _this = this;
 
-  _this.broker.buyOrder(...arrayOfArguments, { from: this.userAccount }, function (error, result) {
+  _this.custodian.confirmTrade(...arrayOfArguments, { from: this.userAccount }, function (error, result) {
     if (!error) {
       _this.newTransactionHash({
         hash: result,
         success: 'The buy order was successfully deployed...',
         fail: 'The buy order failed to deploy...',
-      });
-      callback(null, result);
-    } else {
-      callback(error, null);
-    }
-  });
-};
-
-// Creates a new buyOrder
-method.createSellOrder = function (arrayOfArguments, callback) {
-  console.log('The new Sell order button was pushed for the following values: ');
-  console.log(arrayOfArguments);
-
-  const _this = this;
-
-  _this.broker.sellOrder(...arrayOfArguments, { from: this.userAccount }, function (error, result) {
-    if (!error) {
-      _this.newTransactionHash({
-        hash: result,
-        success: 'The sell order was successfully deployed...',
-        fail: 'The sell order failed to deploy...',
       });
       callback(null, result);
     } else {

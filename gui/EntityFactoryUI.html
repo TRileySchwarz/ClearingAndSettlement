@@ -79,13 +79,13 @@
         console.log(isSuccessful + " " + message + " " + hash);
     }
 
+    el('#testResponse').style.display = 'block';
+
     web3.eth.getAccounts(function(err, res){
         if(!err){
 
             let entityFactory = new EntityFactory(web3, res, updateGlobals, updateTransactionStatus);
-
             el('#accountAddress').innerHTML = res[0];
-            el('#testResponse').style.display = 'block';
 
             // Update the globals all initially
             entityFactory.updateGlobals(0, function(error, result){
@@ -143,6 +143,7 @@
             });
 
         } else {
+            el('#testResponse').innerHTML = "Please login to MetaMask then refresh your browser."
             console.log(err)
         }
     });
