@@ -22,11 +22,15 @@ The project is reliant on the participation of the following stakeholders...
 
 ## Ecosystem via. Proof of Concept and Rinkeby
 
-The Entity Factory Interface can be used anyone to launch their own entities on the Rinkeby test network. 
+The Entity Factory Interface can be used anyone to launch their own entities on the Rinkeby test network. Simply login to your MetaMask
+and open the corresponding file from the /gui folder to access the interfaces.
 
 ** The next version of this is going to contain a 
 automated Javascript program that actively parses the Rinkeby network and looks for the trades emitted by Brokers and Exchanges.
 When it finds a matching pair, it will execute the confirmTrade function which will replicate how the Custodian can automate the verification process.
+
+
+- /gui/EntityFactoryUI.html
 
 <kbd> 
 
@@ -40,6 +44,8 @@ that trades are verified chronologically.
 
     // The Exchange events emited are as follows:
     emit Trade(TransactionID, TimeStamp, BuyInvestor, BuyBroker, SellInvestor, SellBroker, Amount, Asset);
+    
+- /gui/ExchangeUI.html    
     
 <kbd> 
 
@@ -55,6 +61,8 @@ This information is only available after a successful trade on an exchange.
     emit BuyOrder(TransactionID, TimeStamp, Amount, Asset, Investor, Exchange);
     emit SellOrder(TransactionID, TimeStamp, Amount, Asset, Investor, Exchange);
 
+- /gui/BrokerUI.html
+
 <kbd> 
    
 ![alt text](/screens/BrokerUICapture.png?raw=true)
@@ -66,6 +74,7 @@ The Custodian is responsible for verifying that all three events, Trade, BuyOrde
 
     // The Custodian events emited are as follows:
     emit TradeConfirmed(TransactionID, TimeStamp);
+- /gui/CustodianUI.html
     
 <kbd> 
     
