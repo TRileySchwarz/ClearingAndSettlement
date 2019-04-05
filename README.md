@@ -28,7 +28,11 @@ The Entity Factory Interface can be used anyone to launch their own entities on 
 automated Javascript program that actively parses the Rinkeby network and looks for the trades emitted by Brokers and Exchanges.
 When it finds a matching pair, it will execute the confirmTrade function which will replicate how the Custodian can automate the verification process.
 
+<kbd> 
+
 ![alt text](/screens/EntityFactoryUICapture.png?raw=true)
+
+</kbd> 
 
 ## Exchange
 The Exchange entity is responsible for pairing both a buyer and a seller (brokers), generating a unique transactionID that simultaneously serves as a nonce to ensure 
@@ -37,7 +41,11 @@ that trades are verified chronologically.
     // The Exchange events emited are as follows:
     emit Trade(TransactionID, TimeStamp, BuyInvestor, BuyBroker, SellInvestor, SellBroker, Amount, Asset);
     
+<kbd> 
+
 ![alt text](/screens/ExchangeUICapture.png?raw=true)
+    
+</kbd> 
     
 ## Broker
 The Broker entity is responsible for transmitting their clients trade details. This may take the form of either a buyOrder, or a sellOrder. 
@@ -59,8 +67,11 @@ The Custodian is responsible for verifying that all three events, Trade, BuyOrde
     // The Custodian events emited are as follows:
     emit TradeConfirmed(TransactionID, TimeStamp);
     
+<kbd> 
+    
 ![alt text](/screens/CustodianUICapture.png?raw=true)
     
+</kbd>     
 
 
 
