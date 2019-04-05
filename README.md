@@ -46,8 +46,12 @@ This information is only available after a successful trade on an exchange.
     // The Broker events emited are as follows:
     emit BuyOrder(TransactionID, TimeStamp, Amount, Asset, Investor, Exchange);
     emit SellOrder(TransactionID, TimeStamp, Amount, Asset, Investor, Exchange);
-    
+
+<kbd> 
+   
 ![alt text](/screens/BrokerUICapture.png?raw=true)
+
+</kbd>
     
 ## Custodian
 The Custodian is responsible for verifying that all three events, Trade, BuyOrder, and SellOrder all match up accordingly. They must do this in chronological order to ensure correct accounting(hence the nonce/TransactionUUID).
